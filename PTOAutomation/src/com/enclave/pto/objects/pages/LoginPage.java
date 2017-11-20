@@ -46,6 +46,6 @@ public class LoginPage extends BasePage{
 	}
 	
 	public static void checkLoginSuccessfully(){
-	    (new WebDriverWait(driver, 60)).until(ExpectedConditions.presenceOfElementLocated(By.id(LoginPageDefinition.EMAIL_US_LINK)));
+	    (new WebDriverWait(driver, 60)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(LoginPageDefinition.EMAIL_US_LINK)));
 	}
 }
