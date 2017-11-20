@@ -13,6 +13,10 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Vector;
 
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -30,13 +34,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 
+import au.com.bytecode.opencsv.CSVReader;
+
 import com.enclave.pto.objects.pages.LoginPage;
 import com.enclave.pto.utilities.report.TestMethodResultAdapter;
-
-import au.com.bytecode.opencsv.CSVReader;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
 
 public class BaseTestCase {
 
@@ -94,7 +95,7 @@ public class BaseTestCase {
 			DriverCreator driverCreator = new DriverCreator(BaseTestCase.getProperties().getProperty("test.browser"));
 			driver = driverCreator.getWebDriver();
 			LoginPage login = new LoginPage(driver);
-			login.login(getServerURL() + "/SupplierPortal/", currentCredentials);
+			login.login(getServerURL() + "/pto/", currentCredentials);
 			driver.manage().window().setSize(new Dimension(1600, 900));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
