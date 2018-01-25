@@ -18,7 +18,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.enclave.pto.objects.pagedefinitions.CustomerUsers;
 import com.enclave.pto.objects.pagedefinitions.LoginPageDefinition;
 import com.enclave.pto.objects.pagedefinitions.Messages;
 import com.enclave.pto.objects.pagedefinitions.ScreenObjects;
@@ -26,7 +25,7 @@ import com.enclave.pto.objects.pagedefinitions.ScreenObjects;
 public class ScreenAction {
 	WebDriver driver;
 	TableFunction table;
-	int timeout = 60;
+	int timeout = 15;
 
 	public ScreenAction(WebDriver driver) {
 		this.driver = driver;
@@ -219,19 +218,7 @@ public class ScreenAction {
 		listCheckbox.get(n).click();
 	}
 
-	public void clickYesUpdatePasswordRadio() {
-		WebElement radioButton = (new WebDriverWait(driver, 15)).until(ExpectedConditions.presenceOfElementLocated(By
-				.cssSelector(CustomerUsers.YESUPDATEPASSWORD_RADIOBUTTON)));
-		radioButton.findElement(By.tagName("label")).click();
-	}
 
-	public void clickNoUpdatePasswordRadio() {
-
-		WebElement radioButton = (new WebDriverWait(driver, 15)).until(ExpectedConditions.presenceOfElementLocated(By
-				.cssSelector(CustomerUsers.NOUPDATEPASSWORD_RADIOBUTTON)));
-
-		radioButton.findElement(By.tagName("label")).click();
-	}
 
 	public void clickExpandButton(int n) {
 		List<WebElement> listExpand = driver.findElements(By.className(ScreenObjects.EXPAND_CLASS));
@@ -559,4 +546,5 @@ public class ScreenAction {
 		}
 
 	}
+
 }
