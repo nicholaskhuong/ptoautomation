@@ -1,11 +1,12 @@
 package com.enclave.pto.dashboard;
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 
 import com.enclave.pto.objects.pagedefinitions.CreateTimeOff;
@@ -57,6 +58,20 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 		if(action.isElementPresent(By.id("btn_confirm_modal")))
 			action.waitObjVisibleAndClick(By.id("btn_confirm_modal"));
 
+	}
+	
+	@Test(dependsOnMethods = "selectDateOff")
+	public void checkResultAfterSubmitting() {
+		// Success Message
+		action.pause(1000);
+		action.isElementPresent(By.xpath("/html/body/div[3]/span[3]"));
+		assertEquals(driver.findElement(By.xpath("/html/body/div[3]/span[3]")).getText(), "The request has been successfully submitted.");
+		// Back to My Time Off Page
+		action.isElementPresent(By.id("personal-pto-request-table"));
+		// Request appears in Grid View
+		
+
+		
 	}
 
 }
