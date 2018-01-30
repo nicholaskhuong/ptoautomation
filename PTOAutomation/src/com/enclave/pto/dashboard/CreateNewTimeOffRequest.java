@@ -21,18 +21,18 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 
 	ScreenAction action;
 	String informToName = "perla";
-	int avaiPTOBefore;
-	int avaiPTOAfter;
+	float avaiPTOBefore;
+	float avaiPTOAfter;
 	@Test
 	public void clickMyTimeOffMenu() {
 		action = new ScreenAction(driver);
 		action.waitObjVisibleAndClick(By.xpath(SideMenu.MYTIMEOFFMENU));
 
 		// Get available PTO days
-		avaiPTOBefore = Integer.parseInt(driver.findElement(By.id("total_vailable_days")).getText());
+		avaiPTOBefore = Float.parseFloat(driver.findElement(By.id("total_vailable_days")).getText());
 	}
 
-	@Test
+	@Test(dependsOnMethods = "clickMyTimeOffMenu")
 	public void clickCreateTimeOffMenu() {
 		action = new ScreenAction(driver);
 		action.waitObjVisibleAndClick(By.xpath(SideMenu.CREATETIMEOFFMENU));
@@ -64,6 +64,7 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 		action.pause(1000);
 		action.waitObjVisibleAndClick(By.xpath("//table[@class='picker__table']/tbody/tr[5]/td[3]/div"));
 		((JavascriptExecutor)driver).executeScript("scrollTo(0,3000)");
+		action.pause(1000);
 		action.waitObjVisibleAndClick(By.id("btn_save"));
 		if(action.isElementPresent(By.id("btn_confirm_modal")))
 			action.waitObjVisibleAndClick(By.id("btn_confirm_modal"));
@@ -80,7 +81,7 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 		action.isElementPresent(By.id("personal-pto-request-table"));
 
 		// PTO minus one day.
-		avaiPTOAfter = Integer.parseInt(driver.findElement(By.id("total_vailable_days")).getText());
+		avaiPTOAfter = Float.parseFloat(driver.findElement(By.id("total_vailable_days")).getText());
 		assertEquals(avaiPTOBefore-1, avaiPTOAfter);
 		// Request appears in Grid View
 
