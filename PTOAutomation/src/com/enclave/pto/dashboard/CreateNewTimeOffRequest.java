@@ -28,10 +28,10 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 	}
 
 	@Test(dependsOnMethods = "clickCreateTimeOffMenu")
-	public void fillingInformTo() throws InterruptedException {
+	public void fillingInformTo() {
 		action.waitObjVisible(By.xpath(CreateTimeOff.INFORMTO));
 		action.inputTextField(By.xpath(CreateTimeOff.INFORMTO), informToName);
-		Thread.sleep(1000);
+		action.pause(1000);
 		List<WebElement> optionToSelect = driver.findElements(By.xpath("//ul[@class='select2-results__options']/li"));
 		for (WebElement option : optionToSelect){
 			if(option.getText().equals(informToName+"@enclave.vn")){
@@ -48,13 +48,14 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 	}
 
 	@Test(dependsOnMethods = "clickPTOType")
-	public void selectDateOff() throws InterruptedException {
+	public void selectDateOff() {
 		action.waitObjVisibleAndClick(By.xpath("//*[@id='pto-default-detail']/div/div/div[1]/div/div/input[@type='text']"));
-
+		action.pause(1000);
 		action.waitObjVisibleAndClick(By.xpath("//table[@class='picker__table']/tbody/tr[5]/td[3]/div"));
 		((JavascriptExecutor)driver).executeScript("scrollTo(0,3000)");
 		action.waitObjVisibleAndClick(By.id("btn_save"));
-		action.waitObjVisibleAndClick(By.id("btn_confirm_modal"));
+		if(action.isElementPresent(By.id("btn_confirm_modal")))
+			action.waitObjVisibleAndClick(By.id("btn_confirm_modal"));
 
 	}
 
