@@ -21,6 +21,16 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 
 	ScreenAction action;
 	String informToName = "perla";
+	int avaiPTOBefore;
+	int avaiPTOAfter;
+	@Test
+	public void clickMyTimeOffMenu() {
+		action = new ScreenAction(driver);
+		action.waitObjVisibleAndClick(By.xpath(SideMenu.MYTIMEOFFMENU));
+
+		// Get available PTO days
+		avaiPTOBefore = Integer.parseInt(driver.findElement(By.id("total_vailable_days")).getText());
+	}
 
 	@Test
 	public void clickCreateTimeOffMenu() {
@@ -41,7 +51,7 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 			}
 		}
 	}
-	
+
 	@Test(dependsOnMethods = "fillingInformTo")
 	public void clickPTOType() throws InterruptedException {
 		action.waitObjVisibleAndClick(By.xpath(CreateTimeOff.PTOTYPE_CHECKBOX));
@@ -59,7 +69,7 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 			action.waitObjVisibleAndClick(By.id("btn_confirm_modal"));
 
 	}
-	
+
 	@Test(dependsOnMethods = "selectDateOff")
 	public void checkResultAfterSubmitting() {
 		// Success Message
@@ -68,10 +78,15 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 		assertEquals(driver.findElement(By.xpath("/html/body/div[3]/span[3]")).getText(), "The request has been successfully submitted.");
 		// Back to My Time Off Page
 		action.isElementPresent(By.id("personal-pto-request-table"));
-		// Request appears in Grid View
-		
 
-		
+		// PTO minus one day.
+		avaiPTOAfter = Integer.parseInt(driver.findElement(By.id("total_vailable_days")).getText());
+		assertEquals(avaiPTOBefore-1, avaiPTOAfter);
+		// Request appears in Grid View
+
+		// Check Total days of the request in Grid View
+		assertEquals(driver.findElement(By.xpath("//*[@id='personal-pto-request-table']/tbody/tr[1]/td[4]")).getText(), "1");
+
 	}
 
 }
