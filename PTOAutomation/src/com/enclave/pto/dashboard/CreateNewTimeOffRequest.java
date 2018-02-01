@@ -2,6 +2,9 @@ package com.enclave.pto.dashboard;
 
 import static org.testng.Assert.assertEquals;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -62,7 +65,7 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 	public void selectDateOff() {
 		action.waitObjVisibleAndClick(By.xpath("//*[@id='pto-default-detail']/div/div/div[1]/div/div/input[@type='text']"));
 		action.pause(1000);
-		action.waitObjVisibleAndClick(By.xpath("//table[@class='picker__table']/tbody/tr[5]/td[3]/div"));
+		action.waitObjVisibleAndClick(By.xpath("//table[@class='picker__table']/tbody/tr[2]/td[5]/div"));
 		((JavascriptExecutor)driver).executeScript("scrollTo(0,3000)");
 		action.pause(1000);
 		action.waitObjVisibleAndClick(By.id("btn_save"));
@@ -85,8 +88,14 @@ public class CreateNewTimeOffRequest extends BaseTestCase{
 		assertEquals(avaiPTOBefore-1, avaiPTOAfter);
 		// Request appears in Grid View
 
-		// Check Total days of the request in Grid View
+		DateFormat dateFormat = new SimpleDateFormat("EEE, dd-MMM-yyyy");
+		Date date = new Date();
+		String dateFormatted= dateFormat.format(date);
+		assertEquals(driver.findElement(By.xpath("//*[@id='personal-pto-request-table']/tbody/tr[1]/td[2]")).getText(), dateFormatted);
+		assertEquals(driver.findElement(By.xpath("//*[@id='personal-pto-request-table']/tbody/tr[1]/td[3]")).getText(), "PTO");
 		assertEquals(driver.findElement(By.xpath("//*[@id='personal-pto-request-table']/tbody/tr[1]/td[4]")).getText(), "1");
+		assertEquals(driver.findElement(By.xpath("//*[@id='personal-pto-request-table']/tbody/tr[1]/td[5]")).getText(), "Waiting for Direct Manager");
+		
 
 	}
 
